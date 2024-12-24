@@ -25,27 +25,28 @@ export default function TabLayout() {
           },
           tabBarInactiveTintColor: isDark ? '#8E8E93' : '#999999',
           headerTransparent: true,
+          
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
             title: 'Applications',
-            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="briefcase-outline" size={24} color={color} />,
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="briefcase" size={24} color={color} />,
           }}
         />
         <Tabs.Screen
           name="add"
           options={{
             title: 'Add New',
-            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="plus-circle-outline" size={24} color={color} />,
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="plus-circle" size={24} color={color} />,
           }}
         />
         <Tabs.Screen
           name="stats"
           options={{
             title: 'Statistics',
-            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="chart-box-outline" size={24} color={color} />,
+            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="chart-box" size={24} color={color} />,
           }}
         />
       </Tabs>

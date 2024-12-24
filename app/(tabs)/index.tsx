@@ -6,6 +6,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { router } from 'expo-router';
 
 type ApplicationStatus = 'applied' | 'reviewing' | 'interview' | 'offer' | 'rejected';
 
@@ -25,7 +26,7 @@ const StatusBadge = ({ status }: { status: JobApplication['status'] }) => {
   };
 
   return (
-    <View style={[styles.badge, { backgroundColor: statusColors[status] }]}>
+    <View style={[styles.badge, { backgroundColor: statusColors[status] }]} >
       <Text style={styles.badgeText}>{status.charAt(0).toUpperCase() + status.slice(1)}</Text>
     </View>
   );
@@ -90,10 +91,10 @@ export default function ApplicationsScreen() {
     });
 
     return (
-      <Animated.View 
+      <Animated.View
         style={[
           styles.deleteAction,
-          { 
+          {
             transform: [{ translateX: trans }],
             backgroundColor: isDark ? '#1C1C1E' : '#ffffff',
           }
@@ -134,7 +135,7 @@ export default function ApplicationsScreen() {
       <Swipeable renderRightActions={renderRightActions}>
         <Pressable
           style={[styles.applicationItem, { backgroundColor: isDark ? '#1C1C1E' : '#ffffff' }]}
-          onPress={() => navigation.navigate('Details', { id: item.id })}
+          onPress={() => router.push(`/details?id=${item.id}`)}
         >
           <View style={styles.cardHeader}>
             <Text style={[styles.companyName, { color: isDark ? '#FFFFFF' : '#000000' }]}>{item.companyName}</Text>
@@ -158,7 +159,7 @@ export default function ApplicationsScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? '#000000' : '#f2f2f7' }]}>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000000' : '#f2f2f7' }]} >
       <FlatList
         data={applications}
         renderItem={({ item }) => <ApplicationItem item={item} />}

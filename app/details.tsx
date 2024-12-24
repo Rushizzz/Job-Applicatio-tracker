@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, ScrollView, TextInput, Pressable, Alert, useCol
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { storage, JobApplication } from '../lib/storage';
+import { Picker } from '@react-native-picker/picker';
 
 export default function DetailsScreen() {
+  const { id } = useLocalSearchParams();
   const params = useLocalSearchParams();
   const [isEditing, setIsEditing] = useState(false);
   const [application, setApplication] = useState<JobApplication | null>(null);
@@ -12,6 +14,7 @@ export default function DetailsScreen() {
   const isDark = colorScheme === 'dark';
 
   const statuses: JobApplication['status'][] = ['applied', 'reviewing', 'interview', 'offer', 'rejected'];
+  const [selectedValue, setSelectedValue] = useState("option1");
 
   useEffect(() => {
     loadApplication();
@@ -90,6 +93,7 @@ export default function DetailsScreen() {
           {isEditing ? (
             <TextInput
               style={[styles.input, { color: isDark ? '#FFFFFF' : '#000000', borderColor: isDark ? '#333333' : '#E1E1E1' }]}
+
               value={application.companyName}
               onChangeText={(text) => setApplication({ ...application, companyName: text })}
             />
@@ -103,6 +107,7 @@ export default function DetailsScreen() {
           {isEditing ? (
             <TextInput
               style={[styles.input, { color: isDark ? '#FFFFFF' : '#000000', borderColor: isDark ? '#333333' : '#E1E1E1' }]}
+
               value={application.jobTitle}
               onChangeText={(text) => setApplication({ ...application, jobTitle: text })}
             />
@@ -126,6 +131,7 @@ export default function DetailsScreen() {
           {isEditing ? (
             <TextInput
               style={[styles.input, { color: isDark ? '#FFFFFF' : '#000000', borderColor: isDark ? '#333333' : '#E1E1E1' }]}
+
               value={application.companyUrl}
               onChangeText={(text) => setApplication({ ...application, companyUrl: text })}
             />
@@ -139,6 +145,7 @@ export default function DetailsScreen() {
           {isEditing ? (
             <TextInput
               style={[styles.input, styles.textArea, { color: isDark ? '#FFFFFF' : '#000000', borderColor: isDark ? '#333333' : '#E1E1E1' }]}
+
               value={application.notes}
               onChangeText={(text) => setApplication({ ...application, notes: text })}
               multiline
@@ -216,14 +223,17 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   statusButton: {
+    padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    // backgroundColor: '#F2F2F7',
   },
   statusText: {
     fontSize: 16,
     marginRight: 8,
   },
   statusHint: {
+    width: '100%',
     fontSize: 12,
     color: '#666666',
     fontStyle: 'italic',
