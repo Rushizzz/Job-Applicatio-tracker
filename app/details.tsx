@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { storage, JobApplication } from '../lib/storage';
 import { Picker } from '@react-native-picker/picker';
+import Feather from '@expo/vector-icons/Feather';
+import * as Clipboard from 'expo-clipboard';
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -19,6 +21,14 @@ export default function DetailsScreen() {
   useEffect(() => {
     loadApplication();
   }, [params.id]);
+
+  //Code for Clipboard Copy paste
+  const copyToClipboard = async () => {
+    if (application?.companyUrl) {
+      await Clipboard.setStringAsync(application.companyUrl);
+      console.log(`Copied ${application.companyUrl} to clipboard`);
+    }
+  } 
 
   const loadApplication = async () => {
     console.log('Loading application with ID:', params.id);
@@ -136,7 +146,26 @@ export default function DetailsScreen() {
               onChangeText={(text) => setApplication({ ...application, companyUrl: text })}
             />
           ) : (
-            <Text style={[styles.value, { color: isDark ? '#FFFFFF' : '#000000' }]}>{application.companyUrl || 'N/A'}</Text>
+            <View style={styles.link_container}>
+              <Text style={[styles.value, { color: isDark ? '#FFFFFF' : '#000000' }]}>{application.companyUrl || 'N/A'}</Text>
+              <Pressable
+                onPress={copyToClipboard}
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                    padding: 8,
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    borderColor: isDark ? '#333333' : '#E1E1E1',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: 4
+                  },
+                ]}
+              >
+                <Feather name="copy" size={16} color= {isDark ? '#8E8E93' : '#999999'} />
+              </Pressable>
+            </View>
           )}
         </View>
 
@@ -250,4 +279,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  //Url Input and icon View styles
+  link_container: {
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+    justifyContent: 'space-between',
+    
+    gap: 4,
+  },
+
 });

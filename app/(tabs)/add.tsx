@@ -4,6 +4,8 @@ import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { storage, JobApplication } from '../../lib/storage';
 import SuccessAnimation from '../components/SuccessAnimation';
+import * as Clipboard from 'expo-clipboard';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function AddApplicationScreen() {
   const [formData, setFormData] = useState({
@@ -15,6 +17,9 @@ export default function AddApplicationScreen() {
   const [showSuccess, setShowSuccess] = useState(false);
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+
+  
+
 
   const styles = StyleSheet.create({
     container: {
@@ -45,6 +50,7 @@ export default function AddApplicationScreen() {
       marginBottom: 8,
       color: isDark ? '#FFFFFF' : '#000000',
     },
+    
     input: {
       backgroundColor: isDark ? '#1C1C1E' : '#ffffff',
       borderRadius: 8,
@@ -135,20 +141,24 @@ export default function AddApplicationScreen() {
             onChangeText={(text) => setFormData({ ...formData, jobTitle: text })}
             placeholder="Enter job title"
             placeholderTextColor={isDark ? '#8E8E93' : '#999999'}
+            
           />
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Company URL or Job Posting Link</Text>
-          <TextInput
-            style={styles.input}
-            value={formData.companyUrl}
-            onChangeText={(text) => setFormData({ ...formData, companyUrl: text })}
-            placeholder="https://"
-            autoCapitalize="none"
-            keyboardType="url"
-            placeholderTextColor={isDark ? '#8E8E93' : '#999999'}
-          />
+          <Text style={styles.label}>Platform name</Text>
+
+            <TextInput
+              style={styles.input}
+              value={formData.companyUrl}
+              onChangeText={(text) => setFormData({ ...formData, companyUrl: text })}
+              placeholder="link or name"
+              autoCapitalize="none"
+              keyboardType="url"
+              placeholderTextColor={isDark ? '#8E8E93' : '#999999'}
+            />
+           
+          
         </View>
 
         <View style={styles.inputGroup}>
